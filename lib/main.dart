@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:images_picker/images_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:scan/scan.dart';
 
 void main() {
   runApp(const MyApp());
@@ -84,6 +86,30 @@ class _MyHomePageState extends State<MyHomePage> {
             iconSize: 32.0,
             color: Colors.white,
             onPressed: () => cameraController.switchCamera(),
+          ),
+          IconButton(
+            icon: const Icon(Icons.image),
+            iconSize: 32.0,
+            color: Colors.white,
+            onPressed: () async{
+              List<Media>? res = await ImagesPicker.pick();
+              if(res != null){
+                String? code = await Scan.parse(res[0].path);
+                if(code != null){
+                  setState(() {
+                    debugPrint('Barcode found! $code');
+                    _screenOpened = true;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            FoundCodeScreen(screenClosed: _screenWasClosed, value: code),
+                      ),
+                    );
+                  });
+                }
+              }
+            },
           ),
         ],
       ),
