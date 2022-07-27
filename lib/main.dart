@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:images_picker/images_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:qr_code_scanner/qr_overlay.dart';
 import 'package:scan/scan.dart';
 
 void main() {
@@ -114,10 +115,15 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: MobileScanner(
-        allowDuplicates: true,
-        controller: cameraController,
-        onDetect: _foundBarcode,
+      body: Stack(
+        children: [
+          MobileScanner(
+            allowDuplicates: true,
+            controller: cameraController,
+            onDetect: _foundBarcode,
+          ),
+          QRScannerOverlay(overlayColour: Colors.black.withOpacity(0.5)),
+        ],
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
