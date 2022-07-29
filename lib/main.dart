@@ -165,30 +165,36 @@ class FoundCodeScreen extends StatefulWidget {
 class _FoundCodeScreenState extends State<FoundCodeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Found code"),
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            widget.screenClosed();
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_outlined,
+    return WillPopScope(
+      onWillPop: () async {
+        widget.screenClosed();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Found code"),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+              widget.screenClosed();
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_outlined,
+            ),
           ),
         ),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text("Scanned Code:", style: TextStyle(fontSize: 20,),),
-              const SizedBox(height: 20,),
-              Text(widget.value, style: const TextStyle(fontSize: 16,),)
-            ],
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text("Scanned Code:", style: TextStyle(fontSize: 20,),),
+                const SizedBox(height: 20,),
+                Text(widget.value, style: const TextStyle(fontSize: 16,),)
+              ],
+            ),
           ),
         ),
       ),
