@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:images_picker/images_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:qr_code_scanner/qr_overlay.dart';
 import 'package:scan/scan.dart';
@@ -94,9 +94,9 @@ class _MyHomePageState extends State<MyHomePage> {
             iconSize: 32.0,
             color: Colors.white,
             onPressed: () async{
-              List<Media>? res = await ImagesPicker.pick();
-              if(res != null){
-                String? code = await Scan.parse(res[0].path);
+              final ImagePicker _picker = ImagePicker();
+              final XFile? image = await _picker.pickImage(source: ImageSource.gallery);              if(image != null){
+                String? code = await Scan.parse(image.path);
                 if(code != null){
                   setState(() {
                     debugPrint('Barcode found! $code');
